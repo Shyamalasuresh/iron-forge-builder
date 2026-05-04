@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IRON FORGE GYM — Forge Your Limits</title>
+<meta name="description" content="Iron Forge Gym — industrial strength training, CrossFit, personal training, and nutrition coaching. Forge your limits." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@800;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --bg-2:#111;
+    --red:#e8001d;
+    --red-glow:rgba(232,0,29,.55);
+    --white:#fff;
+    --muted:#9a9a9a;
+    --line:#1f1f1f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:'DM Sans',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Barlow Condensed',sans-serif;font-weight:900;letter-spacing:.02em;line-height:1;text-transform:uppercase}
+  h1{font-size:clamp(3rem,9vw,8rem)}
+  h2{font-size:clamp(2.2rem,5vw,4.5rem)}
+  h3{font-size:1.6rem}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
+  section{padding:7rem 0;position:relative}
+  .eyebrow{color:var(--red);font-family:'Bebas Neue',sans-serif;letter-spacing:.3em;font-size:.95rem;margin-bottom:1rem;display:inline-block}
+  .divider{height:6px;width:80px;background:var(--red);margin:1.2rem 0 2rem}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(10,10,10,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    transition:padding .3s;
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.5rem;max-width:1400px;margin:0 auto}
+  .logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.6rem;letter-spacing:.05em}
+  .logo span{color:var(--red)}
+  .nav-links{display:flex;gap:2rem;align-items:center}
+  .nav-links a{font-family:'Bebas Neue',sans-serif;letter-spacing:.18em;font-size:.95rem;position:relative}
+  .nav-links a:not(.btn)::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--red);transition:width .25s}
+  .nav-links a:not(.btn):hover::after{width:100%}
+  .btn{
+    display:inline-block;padding:.85rem 1.6rem;background:var(--red);color:#fff;
+    font-family:'Bebas Neue',sans-serif;letter-spacing:.2em;font-size:.95rem;
+    border:none;cursor:pointer;text-transform:uppercase;
+    clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);
+    transition:transform .2s, box-shadow .3s;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn-glow{animation:pulse 2.2s ease-in-out infinite;box-shadow:0 0 0 0 var(--red-glow)}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 var(--red-glow)}
+    50%{box-shadow:0 0 30px 8px var(--red-glow)}
+  }
+  .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;
+    background:
+      linear-gradient(135deg,rgba(10,10,10,.85) 0%,rgba(10,10,10,.55) 50%,rgba(232,0,29,.25) 100%),
+      url('https://picsum.photos/seed/forge-hero/1920/1080') center/cover no-repeat;
+    position:relative;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 4px);
+    pointer-events:none;
+  }
+  .hero-content{position:relative;z-index:2;max-width:900px}
+  .hero h1 span{color:var(--red);display:block}
+  .hero p{font-size:1.2rem;color:#ccc;margin:1.5rem 0 2.5rem;max-width:560px}
+  .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:'Bebas Neue';letter-spacing:.3em;font-size:.8rem;color:#888;animation:bounce 2s infinite}
+  @keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ABOUT */
+  .about{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .about-img{aspect-ratio:4/5;background:url('https://picsum.photos/seed/forge-about/800/1000') center/cover;border-left:6px solid var(--red)}
+  .about p{color:#bbb;font-size:1.05rem;margin-bottom:1.2rem}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+  .stat{border-top:2px solid var(--red);padding-top:1rem}
+  .stat .num{font-family:'Barlow Condensed';font-weight:900;font-size:2.6rem;line-height:1}
+  .stat .lbl{font-family:'Bebas Neue';letter-spacing:.2em;color:#888;font-size:.85rem;margin-top:.3rem}
+
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-top:3rem}
+  .service{
+    background:var(--bg-2);border:1px solid var(--line);padding:2.2rem 1.8rem;
+    transition:transform .3s, border-color .3s, background .3s;
+    position:relative;overflow:hidden;
+  }
+  .service::before{content:"";position:absolute;top:0;left:0;width:0;height:4px;background:var(--red);transition:width .4s}
+  .service:hover{transform:translateY(-8px);border-color:var(--red);background:#161616}
+  .service:hover::before{width:100%}
+  .service .icon{font-size:2.4rem;color:var(--red);margin-bottom:1rem}
+  .service h3{margin-bottom:.6rem}
+  .service p{color:#999;font-size:.95rem}
+
+  /* PRICING */
+  .pricing{background:var(--bg-2)}
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:3rem}
+  .plan{
+    background:var(--bg);border:1px solid var(--line);padding:2.5rem 2rem;
+    transition:transform .3s;position:relative;
+  }
+  .plan:hover{transform:translateY(-6px)}
+  .plan .tier{font-family:'Bebas Neue';letter-spacing:.3em;color:#888;font-size:.9rem}
+  .plan .price{font-family:'Barlow Condensed';font-weight:900;font-size:4rem;line-height:1;margin:1rem 0}
+  .plan .price small{font-size:1rem;color:#888;font-weight:400;font-family:'DM Sans'}
+  .plan ul{list-style:none;margin:1.5rem 0 2rem}
+  .plan li{padding:.6rem 0;border-bottom:1px dashed #1d1d1d;color:#bbb;font-size:.95rem}
+  .plan li::before{content:"▸ ";color:var(--red)}
+  .plan.featured{
+    border:2px solid var(--red);background:#0d0d0d;transform:scale(1.04);
+    box-shadow:0 20px 60px rgba(232,0,29,.15);
+  }
+  .plan.featured:hover{transform:scale(1.04) translateY(-6px)}
+  .plan.featured .badge{
+    position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+    background:var(--red);color:#fff;padding:.4rem 1.2rem;
+    font-family:'Bebas Neue';letter-spacing:.25em;font-size:.8rem;
+  }
+
+  /* TRAINERS */
+  .trainers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3rem}
+  .trainer{position:relative;overflow:hidden;background:#000;aspect-ratio:3/4}
+  .trainer img{width:100%;height:100%;object-fit:cover;filter:grayscale(60%) contrast(1.1);transition:filter .4s, transform .6s}
+  .trainer:hover img{filter:grayscale(0) contrast(1);transform:scale(1.05)}
+  .trainer .info{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:1.2rem;background:linear-gradient(to top,rgba(0,0,0,.95),transparent);
+  }
+  .trainer h3{margin-bottom:.2rem}
+  .trainer .spec{color:var(--red);font-family:'Bebas Neue';letter-spacing:.2em;font-size:.85rem}
+
+  /* GALLERY */
+  .gallery{background:var(--bg-2)}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-auto-rows:180px;gap:.8rem;margin-top:3rem;
+  }
+  .gallery-grid div{overflow:hidden;background:#000}
+  .gallery-grid img{width:100%;height:100%;object-fit:cover;transition:transform .6s, filter .4s;filter:grayscale(40%)}
+  .gallery-grid div:hover img{transform:scale(1.1);filter:grayscale(0)}
+  .gallery-grid div:nth-child(1){grid-column:span 2;grid-row:span 2}
+  .gallery-grid div:nth-child(6){grid-column:span 2}
+
+  /* TESTIMONIALS */
+  .testi-wrap{margin-top:3rem;position:relative;overflow:hidden}
+  .testi-track{display:flex;transition:transform .6s ease}
+  .testi{flex:0 0 100%;padding:0 1rem}
+  .testi-card{
+    background:var(--bg-2);border-left:5px solid var(--red);
+    padding:3rem;max-width:800px;margin:0 auto;position:relative;
+  }
+  .testi-card::before{content:"\201C";position:absolute;top:-20px;right:30px;font-size:8rem;color:var(--red);opacity:.3;font-family:Georgia,serif;line-height:1}
+  .testi-card p{font-size:1.2rem;font-style:italic;color:#ddd;margin-bottom:1.5rem}
+  .testi-card .who{font-family:'Bebas Neue';letter-spacing:.2em;color:var(--red)}
+  .testi-dots{display:flex;justify-content:center;gap:.6rem;margin-top:2rem}
+  .testi-dots button{width:30px;height:4px;background:#333;border:none;cursor:pointer;transition:background .3s}
+  .testi-dots button.active{background:var(--red)}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;margin-top:3rem}
+  form{display:grid;gap:1rem}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  input,select,textarea{
+    width:100%;padding:1rem;background:var(--bg-2);border:1px solid var(--line);
+    color:#fff;font-family:'DM Sans';font-size:1rem;transition:border-color .2s;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red)}
+  textarea{min-height:140px;resize:vertical}
+  .info-block{background:var(--bg-2);padding:2.5rem;border-top:4px solid var(--red)}
+  .info-block h3{margin-bottom:1.2rem}
+  .info-block p{color:#bbb;margin-bottom:1rem;display:flex;gap:.8rem;align-items:flex-start}
+  .info-block strong{color:var(--red);font-family:'Bebas Neue';letter-spacing:.15em;font-size:.85rem;display:block;margin-bottom:.2rem}
+
+  /* FOOTER */
+  footer{background:#050505;padding:4rem 0 2rem;border-top:1px solid var(--line)}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+  .foot-grid p{color:#888;margin-top:1rem;max-width:380px}
+  .foot-grid h4{font-family:'Bebas Neue';letter-spacing:.25em;font-size:1rem;margin-bottom:1.2rem;color:var(--red)}
+  .foot-grid ul{list-style:none}
+  .foot-grid li{margin-bottom:.6rem;color:#aaa;cursor:pointer;transition:color .2s}
+  .foot-grid li:hover{color:var(--red)}
+  .socials{display:flex;gap:.8rem;margin-top:1.5rem}
+  .socials a{
+    width:42px;height:42px;display:grid;place-items:center;
+    background:var(--bg-2);border:1px solid var(--line);transition:all .2s;font-size:1.1rem;
+  }
+  .socials a:hover{background:var(--red);border-color:var(--red);transform:translateY(-3px)}
+  .copyright{text-align:center;color:#555;font-size:.85rem;padding-top:2rem;border-top:1px solid var(--line)}
+
+  /* REVEAL ANIMATION */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease, transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* RESPONSIVE */
+  @media(max-width:860px){
+    .menu-toggle{display:block}
+    .nav-links{
+      position:absolute;top:100%;left:0;right:0;background:var(--bg);
+      flex-direction:column;padding:2rem;gap:1.5rem;
+      border-bottom:1px solid var(--line);
+      transform:translateY(-150%);transition:transform .3s;
+    }
+    .nav-links.open{transform:translateY(0)}
+    .about-grid,.contact-grid,.foot-grid{grid-template-columns:1fr}
+    .gallery-grid{grid-template-columns:repeat(2,1fr)}
+    .gallery-grid div:nth-child(1){grid-column:span 2}
+    .gallery-grid div:nth-child(6){grid-column:span 2}
+    .plan.featured{transform:none}
+    .plan.featured:hover{transform:translateY(-6px)}
+    section{padding:5rem 0}
+    .row2{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="logo">IRON<span>FORGE</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#trainers">Trainers</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="btn">Join Now</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<header id="hero" class="hero">
+  <div class="container hero-content">
+    <span class="eyebrow">EST. 2008 — NO EXCUSES</span>
+    <h1>Forge Your <span>Limits.</span></h1>
+    <p>Steel doesn't bend itself. Welcome to Iron Forge — where sweat is currency and strength is a statement.</p>
+    <a href="#contact" class="btn btn-glow">Join Now →</a>
+  </div>
+  <div class="scroll-hint">Scroll ↓</div>
+</header>
+
+<section id="about" class="about">
+  <div class="container about-grid">
+    <div class="about-img reveal"></div>
+    <div class="reveal">
+      <span class="eyebrow">Our Story</span>
+      <h2>Built in the <br>Fire of Discipline.</h2>
+      <div class="divider"></div>
+      <p>Founded in 2008 by powerlifters who were tired of polished commercial gyms, Iron Forge was built on one principle: <strong style="color:#fff">show up and do the work.</strong></p>
+      <p>We don't sell ambiance. We sell results. Our 25,000 sq ft warehouse facility houses the heaviest plates, the loudest barbells, and the most relentless community in the city.</p>
+      <div class="stats">
+        <div class="stat"><div class="num">15+</div><div class="lbl">Years</div></div>
+        <div class="stat"><div class="num">3K</div><div class="lbl">Members</div></div>
+        <div class="stat"><div class="num">24/7</div><div class="lbl">Access</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">What We Offer</span>
+      <h2>Train Like You <span style="color:var(--red)">Mean It.</span></h2>
+      <div class="divider" style="margin:1.2rem auto 0"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service reveal"><div class="icon">🏋️</div><h3>Strength Training</h3><p>Olympic platforms, power racks, calibrated plates. Built for PRs.</p></div>
+      <div class="service reveal"><div class="icon">🔥</div><h3>Cardio</h3><p>Assault bikes, sleds, rowers. Burn that aerobic base into the floor.</p></div>
+      <div class="service reveal"><div class="icon">⚡</div><h3>CrossFit</h3><p>Daily WODs in our affiliate box. Scalable for every level.</p></div>
+      <div class="service reveal"><div class="icon">👊</div><h3>Personal Training</h3><p>1-on-1 coaching with certified strength specialists.</p></div>
+      <div class="service reveal"><div class="icon">🧘</div><h3>Yoga & Mobility</h3><p>Recovery isn't optional. Heated and unheated classes daily.</p></div>
+      <div class="service reveal"><div class="icon">🥩</div><h3>Nutrition Coaching</h3><p>Macro plans built around your training. No fad diets, just fuel.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">Membership</span>
+      <h2>Pick Your <span style="color:var(--red)">Weight Class.</span></h2>
+      <div class="divider" style="margin:1.2rem auto 0"></div>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan reveal">
+        <div class="tier">BASIC</div>
+        <div class="price">$39<small>/mo</small></div>
+        <ul>
+          <li>Full gym floor access</li>
+          <li>Locker room & showers</li>
+          <li>Open hours: 5am – 11pm</li>
+          <li>1 guest pass / month</li>
+        </ul>
+        <a href="#contact" class="btn">Get Started</a>
+      </div>
+      <div class="plan featured reveal">
+        <div class="badge">Most Popular</div>
+        <div class="tier">PRO</div>
+        <div class="price">$79<small>/mo</small></div>
+        <ul>
+          <li>Everything in Basic</li>
+          <li>24/7 access</li>
+          <li>All group classes (CrossFit, Yoga)</li>
+          <li>Recovery zone (sauna, cold plunge)</li>
+          <li>4 guest passes / month</li>
+        </ul>
+        <a href="#contact" class="btn">Join Pro</a>
+      </div>
+      <div class="plan reveal">
+        <div class="tier">ELITE</div>
+        <div class="price">$149<small>/mo</small></div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>4 PT sessions / month</li>
+          <li>Custom nutrition plan</li>
+          <li>Body comp assessments</li>
+          <li>Unlimited guest passes</li>
+        </ul>
+        <a href="#contact" class="btn">Go Elite</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trainers">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">The Coaches</span>
+      <h2>Forged by <span style="color:var(--red)">Experience.</span></h2>
+      <div class="divider" style="margin:1.2rem auto 0"></div>
+    </div>
+    <div class="trainers-grid">
+      <div class="trainer reveal"><img src="https://picsum.photos/seed/coach1/400/600" alt="Coach Marcus"><div class="info"><h3>Marcus Vale</h3><div class="spec">Strength & Powerlifting</div></div></div>
+      <div class="trainer reveal"><img src="https://picsum.photos/seed/coach2/400/600" alt="Coach Lena"><div class="info"><h3>Lena Cross</h3><div class="spec">CrossFit Head Coach</div></div></div>
+      <div class="trainer reveal"><img src="https://picsum.photos/seed/coach3/400/600" alt="Coach Devon"><div class="info"><h3>Devon Reyes</h3><div class="spec">Conditioning & HIIT</div></div></div>
+      <div class="trainer reveal"><img src="https://picsum.photos/seed/coach4/400/600" alt="Coach Aiko"><div class="info"><h3>Aiko Tanaka</h3><div class="spec">Mobility & Yoga</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">Inside The Forge</span>
+      <h2>Where The Work <span style="color:var(--red)">Happens.</span></h2>
+      <div class="divider" style="margin:1.2rem auto 0"></div>
+    </div>
+    <div class="gallery-grid reveal">
+      <div><img src="https://picsum.photos/seed/g1/800/800" alt=""></div>
+      <div><img src="https://picsum.photos/seed/g2/600/400" alt=""></div>
+      <div><img src="https://picsum.photos/seed/g3/600/400" alt=""></div>
+      <div><img src="https://picsum.photos/seed/g4/600/400" alt=""></div>
+      <div><img src="https://picsum.photos/seed/g5/600/400" alt=""></div>
+      <div><img src="https://picsum.photos/seed/g6/800/400" alt=""></div>
+      <div><img src="https://picsum.photos/seed/g7/600/400" alt=""></div>
+      <div><img src="https://picsum.photos/seed/g8/600/400" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">Voices of the Floor</span>
+      <h2>What Members <span style="color:var(--red)">Say.</span></h2>
+      <div class="divider" style="margin:1.2rem auto 0"></div>
+    </div>
+    <div class="testi-wrap reveal">
+      <div class="testi-track" id="testiTrack">
+        <div class="testi"><div class="testi-card"><p>"I added 90lbs to my deadlift in 6 months. The coaches here actually give a damn — and the energy on the floor is unmatched."</p><div class="who">— JAKE M., MEMBER 3 YRS</div></div></div>
+        <div class="testi"><div class="testi-card"><p>"Walked in scared, walked out strong. Iron Forge isn't a gym, it's a community that holds you accountable to your goals."</p><div class="who">— SOFIA R., MEMBER 2 YRS</div></div></div>
+        <div class="testi"><div class="testi-card"><p>"Best CrossFit programming in the city. No fluff, just intelligently brutal workouts that get you results."</p><div class="who">— TYRELL K., MEMBER 4 YRS</div></div></div>
+      </div>
+      <div class="testi-dots" id="testiDots"></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">Step Inside</span>
+      <h2>Start Your <span style="color:var(--red)">Forge.</span></h2>
+      <div class="divider" style="margin:1.2rem auto 0"></div>
+    </div>
+    <div class="contact-grid">
+      <form class="reveal" onsubmit="event.preventDefault();alert('Welcome to the Forge. We\\'ll be in touch within 24 hours.');this.reset();">
+        <div class="row2">
+          <input type="text" placeholder="Full Name" required>
+          <input type="email" placeholder="Email" required>
+        </div>
+        <div class="row2">
+          <input type="tel" placeholder="Phone" required>
+          <select required>
+            <option value="">Select Plan</option>
+            <option>Basic — $39/mo</option>
+            <option>Pro — $79/mo</option>
+            <option>Elite — $149/mo</option>
+          </select>
+        </div>
+        <textarea placeholder="Tell us about your goals..."></textarea>
+        <button type="submit" class="btn btn-glow" style="justify-self:start">Send Inquiry →</button>
+      </form>
+      <div class="info-block reveal">
+        <h3>Visit The Forge</h3>
+        <p><span><strong>Address</strong>1428 Foundry Avenue<br>Industrial District, NY 10013</span></p>
+        <p><span><strong>Hours</strong>Mon–Fri: 5am – 11pm<br>Sat–Sun: 7am – 9pm<br>Pro/Elite: 24/7 access</span></p>
+        <p><span><strong>Phone</strong>(212) 555-LIFT</span></p>
+        <p><span><strong>Email</strong>train@ironforgegym.com</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="font-size:1.8rem">IRON<span style="color:var(--red)">FORGE</span></div>
+        <p>The industrial gym for those who refuse to coast. Forge your limits — every single rep.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="YouTube">YT</a>
+          <a href="#" aria-label="TikTok">TT</a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#trainers">Trainers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>1428 Foundry Ave</li>
+          <li>NY 10013</li>
+          <li>(212) 555-LIFT</li>
+          <li>train@ironforgegym.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">© 2026 Iron Forge Gym. All rights reserved. Built to break limits.</div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const toggle = document.getElementById('menuToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Nav shrink on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.padding = window.scrollY > 40 ? '0' : '0';
+    nav.style.background = window.scrollY > 40 ? 'rgba(10,10,10,.95)' : 'rgba(10,10,10,.85)';
+  });
+
+  // Testimonials slider
+  const track = document.getElementById('testiTrack');
+  const dotsBox = document.getElementById('testiDots');
+  const total = track.children.length;
+  let idx = 0;
+  for (let i = 0; i < total; i++) {
+    const b = document.createElement('button');
+    b.addEventListener('click', () => go(i));
+    dotsBox.appendChild(b);
+  }
+  function go(n) {
+    idx = (n + total) % total;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    [...dotsBox.children].forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+  go(0);
+  setInterval(() => go(idx + 1), 6000);
+</script>
+</body>
+</html>
